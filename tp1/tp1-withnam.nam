@@ -1,0 +1,9 @@
+V -t * -v 1.0a5 -a 0
+W -t * -x 569.203125 -y 586.218750
+A -t * -n 1 -p 0 -o 0x7fffffff -c 30 -a 1
+A -t * -h 1 -m 1073741823 -s 0
+n -t * -a 0 -s 0 -S UP -v circle -c black -i black -x 569.203125 -y 586.218750 -Z 0.0
+n -t * -a 1 -s 1 -S UP -v circle -c black -i black -x 477.421844 -y 585.531250 -Z 0.0
+l -t * -s 0 -d 1 -S UP -r 1000000 -D 0.02 -c black -o 180.4deg
+q -t * -s 1 -d 0 -a 0.5
+q -t * -s 0 -d 1 -a 0.5
