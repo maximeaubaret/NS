@@ -8,10 +8,17 @@
 # Create a new simulator object.
 set ns [new Simulator]
 # Create a nam trace datafile.
-set namfile [open /vagrant/tp1/tp1-withnam.nam w]
+set namfile [open tp1-withnam.nam w]
 $ns namtrace-all $namfile
 
 # Create wired nodes.
+set node(1) [$ns node]
+## node(1) at 487.390594,597.906250
+$node(1) set X_ 487.390594
+$node(1) set Y_ 597.906250
+$node(1) set Z_ 0.0
+$node(1) color "black"
+
 set node(2) [$ns node]
 ## node(2) at 569.203125,586.218750
 $node(2) set X_ 569.203125
@@ -19,34 +26,25 @@ $node(2) set Y_ 586.218750
 $node(2) set Z_ 0.0
 $node(2) color "black"
 
-set node(1) [$ns node]
-## node(1) at 477.421844,585.531250
-$node(1) set X_ 477.421844
-$node(1) set Y_ 585.531250
-$node(1) set Z_ 0.0
-$node(1) color "black"
-
 
 # Create links between nodes.
-$ns simplex-link $node(2) $node(1) 1.000000Mb 20.000000ms DropTail
-$ns simplex-link-op $node(2) $node(1) queuePos 0.5
-$ns simplex-link-op $node(2) $node(1) color black
-$ns simplex-link-op $node(2) $node(1) orient 180.4deg
-# Set Queue Properties for link 2->1
-[[$ns link $node(2) $node(1)] queue] set limit_ 20
-
 $ns simplex-link $node(1) $node(2) 1.000000Mb 20.000000ms DropTail
 $ns simplex-link-op $node(1) $node(2) queuePos 0.5
 $ns simplex-link-op $node(1) $node(2) color black
-$ns simplex-link-op $node(1) $node(2) orient 0.4deg
+$ns simplex-link-op $node(1) $node(2) orient 351.9deg
 # Set Queue Properties for link 1->2
 [[$ns link $node(1) $node(2)] queue] set limit_ 20
+
+$ns simplex-link $node(2) $node(1) 1.000000Mb 20.000000ms DropTail
+$ns simplex-link-op $node(2) $node(1) queuePos 0.5
+$ns simplex-link-op $node(2) $node(1) color black
+$ns simplex-link-op $node(2) $node(1) orient 171.9deg
+# Set Queue Properties for link 2->1
+[[$ns link $node(2) $node(1)] queue] set limit_ 20
 
 # Add Link Loss Models
 
 # Create agents.
-set agent(2) [new Agent/Null]
-$ns attach-agent $node(2) $agent(2)
 set agent(1) [new Agent/UDP]
 $ns attach-agent $node(1) $agent(1)
 
@@ -54,17 +52,27 @@ $ns color 1 "black"
 $agent(1) set fid_ 1
 $agent(1) set packetSize_ 210
 
+# Create traffic sources and add them to the agent.
+set traffic_source(1) [new Application/Traffic/CBR]
+$traffic_source(1) attach-agent $agent(1)
+$traffic_source(1) set interval_ 0.001950
+set agent(2) [new Agent/Null]
+$ns attach-agent $node(2) $agent(2)
+
 # Connect agents.
 $ns connect $agent(1) $agent(2)
 
 
 # Traffic Source actions.
+$ns at 1.000000 "$traffic_source(1) start"
+$ns at 4.500000 "$traffic_source(1) stop"
+
 # Run the simulation
 proc finish {} {
 	global ns namfile
 	$ns flush-trace
 	close $namfile
-	exec nam -r 2000.000000us /vagrant/tp1/tp1-withnam.nam &	
+	exec nam -r 2000.000000us tp1-withnam.nam &	
 	exit 0
 	}
 $ns at 5.000000 "finish"
