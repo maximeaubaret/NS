@@ -81,20 +81,22 @@ $cbr_c1 set rate_ [expr $cir1 + 10000]
 
 set cbr_c2 [new Application/Traffic/CBR]
 $cbr_c2 attach-agent $agent_udp_c2
-$cbr_c2 set rate_ [expr $cir2 + 10000]
+$cbr_c2 set rate_ $cir2
 
 # Configuration DiffServ
 set qEC [[$ns link $e $c] queue]
 
-$qEC meanPktSize 210 ;# Taille moyenne des paquets
+$qEC meanPktSize 210
 
-$qEC set numQueues_ 1 ;# Buffer physique
-$qEC setNumPrec 2 ;# Nombre Buffer virtuels
+$qEC set numQueues_ 1
+$qEC setNumPrec 2
 
 $qEC addPolicyEntry [$c1 id] [$s id] TokenBucket 10 $cir1 $cbs
+# $qEC addPolicyEntry [$c2 id] [$s id] TokenBucket 20 $cir2 $cbs
 $qEC addPolicyEntry [$c2 id] [$s id] Null 20 ;# $cir2 $cbs
 
 $qEC addPolicerEntry TokenBucket 10 11
+# $qEC addPolicerEntry TokenBucket 20 21
 $qEC addPolicerEntry Null 20
 
 $qEC addPHBEntry 10 0 0
@@ -121,8 +123,6 @@ $qCS configQ 0 1 $T_min_RED2 $T_max_RED2 $Proba_Perte2
 # Scenario
 $ns at 0.0 "$cbr_c1 start"
 $ns at 0.0 "$cbr_c2 start"
-$ns at 4.0 "$cbr_c1 stop"
-$ns at 4.0 "$cbr_c2 stop"
 $ns at 5.0 "finish"
 
 $ns run
