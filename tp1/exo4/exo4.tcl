@@ -60,7 +60,7 @@ proc attach-expoo-traffic { node sink size burst idle rate color } {
 proc record { } {
   global sink0 sink1 sink2 f0 f1 f2
   set ns [Simulator instance]
-  set time 0.5
+  set time 0.1
   set bw0 [$sink0 set bytes_]
   set bw1 [$sink1 set bytes_]
   set bw2 [$sink2 set bytes_]
