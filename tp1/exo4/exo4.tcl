@@ -7,6 +7,10 @@ set f0 [open out0.tr w]
 set f1 [open out1.tr w]
 set f2 [open out2.tr w]
 
+$ns color 1 Blue
+$ns color 2 Red
+$ns color 3 Green
+
 set n0 [$ns node]
 set n1 [$ns node]
 set n2 [$ns node]
@@ -34,10 +38,11 @@ proc finish {} {
   exit 0
 }
 
-proc attach-expoo-traffic { node sink size burst idle rate } {
+proc attach-expoo-traffic { node sink size burst idle rate color } {
   set ns [Simulator instance]
 
   set source [new Agent/UDP]
+  $source set class_ $color
   $ns attach-agent $node $source
 
   set traffic [new Application/Traffic/Exponential]
@@ -64,7 +69,7 @@ proc record { } {
   puts $f1 "$now [expr $bw1/$time*8/1000000]"
   puts $f2 "$now [expr $bw2/$time*8/1000000]"
   $sink0 set bytes_ 0
-  $sink1 set bytes_ 1
+  $sink1 set bytes_ 0
   $sink2 set bytes_ 0
   $ns at [expr $now+$time] "record"
 }
@@ -76,9 +81,11 @@ $ns attach-agent $n4 $sink0
 $ns attach-agent $n4 $sink1
 $ns attach-agent $n4 $sink2
 
-set source0 [attach-expoo-traffic $n0 $sink0 200 2s 1s 100k]
-set source1 [attach-expoo-traffic $n1 $sink1 200 2s 1s 200k]
-set source2 [attach-expoo-traffic $n2 $sink2 200 2s 1s 300k]
+set source0 [attach-expoo-traffic $n0 $sink0 200 2s 1s 100k 1]
+set source1 [attach-expoo-traffic $n1 $sink1 200 2s 1s 200k 2]
+set source2 [attach-expoo-traffic $n2 $sink2 200 2s 1s 300k 3]
+
+
 
 $ns at 0.0 "record"
 
