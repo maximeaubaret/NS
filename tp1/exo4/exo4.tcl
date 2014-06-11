@@ -1,5 +1,8 @@
 set ns [new Simulator]
 
+set nf [open out.nam w]
+$ns namtrace-all $nf
+
 set f0 [open out0.tr w]
 set f1 [open out1.tr w]
 set f2 [open out2.tr w]
@@ -11,9 +14,13 @@ set n3 [$ns node]
 set n4 [$ns node]
 
 $ns duplex-link $n0 $n3 1Mb 100ms DropTail
+$ns duplex-link-op $n0 $n3 orient right-down
 $ns duplex-link $n1 $n3 1Mb 100ms DropTail
+$ns duplex-link-op $n1 $n3 orient down
 $ns duplex-link $n2 $n3 1Mb 100ms DropTail
+$ns duplex-link-op $n2 $n3 orient left-down
 $ns duplex-link $n3 $n4 1Mb 100ms DropTail
+$ns duplex-link-op $n3 $n4 orient down
 
 proc finish {} {
   global f0 f1 f2
@@ -22,6 +29,7 @@ proc finish {} {
   close $f1
   close $f2
 
+  exec nam out.nam &
   exec xgraph out0.tr out1.tr out2.tr -geometry 800x400 &
   exit 0
 }
