@@ -57,7 +57,7 @@ $ftp attach-agent $agent_tcp
 set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $agent_udp
 $cbr set packetSize_ 1024
-$cbr set rate_ 1mb
+$cbr set rate_ 1Mb
 
 # Création de l'agent Sink
 set agent_sink [new Agent/TCPSink]
@@ -65,7 +65,7 @@ $ns attach-agent $n3 $agent_sink
 $ns connect $agent_tcp $agent_sink
 
 # Création de l'agent Null
-set agent_null [new Agent/UDP]
+set agent_null [new Agent/Null]
 $ns attach-agent $n3 $agent_null
 $ns connect $agent_udp $agent_null
 
