@@ -1,0 +1,22 @@
+Policy Table(2):
+Flow (0 to 4): Token Bucket policer, initial code  point 10, CIR 1000000.0 bps, CBS 500.0 bytes.
+Flow (1 to 4): Null policer, initial code point 20
+
+Policer Table:
+Token Bucket policer code point 10 is policed to code point 11.
+Null policer code point 20 is policed to code point 20.
+
+PHB Table:
+Code Point 10 is associated with Queue 0, Precedence 0
+Code Point 11 is associated with Queue 0, Precedence 1
+Code Point 20 is associated with Queue 0, Precedence 1
+
+
+Packets Statistics
+=======================================
+ CP  TotPkts   TxPkts   ldrops   edrops
+ --  -------   ------   ------   ------
+All     4493     4493        0        0
+ 10     2976     2976        0        0
+ 11       29       29        0        0
+ 20     1488     1488        0        0

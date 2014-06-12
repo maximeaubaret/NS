@@ -16,7 +16,7 @@ proc finish {} {
   # fermer le fichier trace
   close $nf
   # exécuter le nam avec en entrée le fichier trace
-  exec nam out.nam &
+  # exec nam out.nam &
   exit 0
 }
 
