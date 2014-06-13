@@ -106,8 +106,8 @@ $qE1C addPolicerEntry TokenBucket 20 21
 
 $qE1C addPHBEntry 10 0 0
 $qE1C addPHBEntry 11 0 1
-$qE1C addPHBEntry 20 1 0
-$qE1C addPHBEntry 21 1 1
+$qE1C addPHBEntry 20 0 0
+$qE1C addPHBEntry 21 0 1
 
 $qE1C configQ 0 0 $T_min_RED1 $T_max_RED1 $Proba_Perte1
 $qE1C configQ 0 1 $T_min_RED2 $T_max_RED2 $Proba_Perte2
@@ -146,13 +146,13 @@ $qE2C configQ 0 1 $T_min_RED2 $T_max_RED2 $Proba_Perte2
 set qCE2 [[$ns link $CORE $E2] queue]
 $qCE2 meanPktSize $packetSize
 
-$qCE2 set numQueues_ 2
+$qCE2 set numQueues_ 1
 $qCE2 setNumPrec 2
 
 $qCE2 addPHBEntry 10 0 0
 $qCE2 addPHBEntry 11 0 1
-$qCE2 addPHBEntry 20 1 0
-$qCE2 addPHBEntry 21 1 1
+$qCE2 addPHBEntry 20 0 0
+$qCE2 addPHBEntry 21 0 1
 
 $qCE2 configQ 0 0 $T_min_RED1 $T_max_RED1 $Proba_Perte1
 $qCE2 configQ 0 1 $T_min_RED2 $T_max_RED2 $Proba_Perte2
