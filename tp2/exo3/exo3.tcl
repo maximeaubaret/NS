@@ -17,10 +17,10 @@ proc finish {} {
 # Variables
 set cir0 1000000
 set cbs0 10000
-set cir1 4000000
+set cir1 1000000
 set cbs1 10000
 
-set rate0 2000000
+set rate0 4000000
 set rate1 4000000
 
 set T_min_RED1 20
